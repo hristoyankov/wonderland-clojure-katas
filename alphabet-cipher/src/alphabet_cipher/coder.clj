@@ -15,8 +15,13 @@
                     msg key))))
 
 (defn decode [keyword message]
-  "decodeme")
+  (let [key (take (count message) (cycle keyword))
+        msg (seq message)]
+    (apply str (map #(nth alphabet
+                          (mod (- (char->index %1)
+                                  (char->index %2))
+                               (count alphabet)))
+                    msg key))))
 
 (defn decipher [cipher message]
   "decypherme")
-
