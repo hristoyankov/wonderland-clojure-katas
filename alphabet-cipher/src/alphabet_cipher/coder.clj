@@ -3,16 +3,15 @@
 (defn char->index [c]
   (- (int c) (int \a)))
 
-(defn rotate [n xs]
-  (concat (drop n xs) (take n xs)))
-
-(def alphabet
-  (iterate #(rotate 1 %) (seq "abcdefghijklmnopqrstuvwxyz")))
+(def alphabet (seq "abcdefghijklmnopqrstuvwxyz"))
 
 (defn encode [keyword message]
   (let [key (take (count message) (cycle keyword))
         msg (seq message)]
-    (apply str (map #(nth (nth alphabet (char->index %1)) (char->index %2))
+    (apply str (map #(nth alphabet
+                          (mod (+ (char->index %2)
+                                  (char->index %1))
+                               (count alphabet)))
                     msg key))))
 
 (defn decode [keyword message]
