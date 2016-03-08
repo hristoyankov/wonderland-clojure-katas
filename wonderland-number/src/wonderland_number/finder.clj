@@ -15,3 +15,16 @@
               (filter #(hasAllTheSameDigits? % (* 5 %)))
               (filter #(hasAllTheSameDigits? % (* 6 %))))))
 
+(defn digits [n]
+  (list (unchecked-divide-int n 1000)
+        (mod (unchecked-divide-int n 100) 10)
+        (mod (unchecked-divide-int n 10) 10)
+        (mod n 10)))
+
+(defn wonderland-numbers []
+  (filter (fn [n]
+            (= n
+               (reduce +
+                       (map #(* % % %)
+                            (digits n)))))
+          (range 1000)))
