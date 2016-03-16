@@ -26,6 +26,10 @@
             (map #(build-tree % (clojure.set/difference (set dict) (set nodes))) nodes))))
 
 (defn doublets [word1 word2]
-  (map first (tree-seq next rest (build-tree word1 words))))
+  (map first
+       (filter #(some #{word2} (flatten %))
+               (tree-seq next rest (build-tree word1 words)))))
+
+
 
 
